@@ -1,12 +1,13 @@
 program e02;
 
+// programa principal
 var
-    x: integer;
+    : integer;
 begin
-    write('Ingresar un numero:'); readln(x);
+    write('Ingresar un numero:'); readln(num);
 
-    if (x < 0) then
-        x:= x * -1;
+    if (num < 0) then
+        num:= num * -1;
         
-    writeln('El valor absoluto es: ',x);
+    writeln('El valor absoluto es: ',num);
 end.

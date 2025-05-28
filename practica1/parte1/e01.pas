@@ -1,5 +1,6 @@
 program e01;
 
+// programa principal
 var
     a,b: integer;
 begin

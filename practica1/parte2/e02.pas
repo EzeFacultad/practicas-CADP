@@ -1,5 +1,6 @@
 program e02;
 
+// programa principal
 var
     x,max,pos,num: integer;
 begin
