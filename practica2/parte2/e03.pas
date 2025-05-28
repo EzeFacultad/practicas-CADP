@@ -1,4 +1,4 @@
-program e03;
+program Ejercicio3;
 
 { suma los números entre a y b, y retorna el resultado en c }
 // Rta: C deberia ser una variable y pasarse por referencia

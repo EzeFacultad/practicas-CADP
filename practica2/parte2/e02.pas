@@ -1,4 +1,4 @@
-program e04;
+program Ejercicio2;
 
 procedure digParesImpares(num : integer; var par, impar : integer);
     var

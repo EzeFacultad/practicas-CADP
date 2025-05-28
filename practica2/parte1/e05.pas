@@ -1,4 +1,4 @@
-program e05;
+program alcance5;
 
 function cuatro: integer;
     begin

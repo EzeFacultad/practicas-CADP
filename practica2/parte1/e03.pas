@@ -1,4 +1,4 @@
-program e03;
+program alcance3;
 
 var a: integer;
 

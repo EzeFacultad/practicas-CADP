@@ -1,4 +1,4 @@
-program e07;
+program alcanceYFunciones;
 
 var
     suma, cant : integer;
