@@ -1,121 +1,135 @@
-program e06;
+program p6eje6;
+
 type
-    REG_satelite = record
+    espec = 1 .. 7;
+
+    sonda = record
         nombre: string;
-        duracion, espectro: integer;
-        costo_const, costo_mante: real;
+        duracion: integer;
+        costoConstr: real;
+        costoMant: real;
+        rango: espec;
     end;
 
-    Lista = ^Nodo;
-    Nodo = record
-        dato: REG_satelite;
-        sig: Lista;
+    lista = ^nodo;
+
+    nodo = record
+        dato: sonda;
+        sig: lista;
     end;
 
-    vector_contador = array[1..7] of integer;
+    vectorRangos = array [1..7] of integer;
 
 
-procedure crearLista(var L: Lista; r: REG_satelite);
+procedure cargarLista(var L:lista; s: sonda);
 var
-    nue: Lista;
+    nue: lista;
+
 begin
-    new(nue);
-    nue^.dato:= r;
-    nue^.sig:= L;
-    L:= nue;
+    new (nue);
+    nue^.dato := s;
+    nue^.sig := L;
+    L := nue;
 end;
 
-procedure leer(var r: REG_satelite);
+procedure leer(var s: sonda);
 begin
-    readln(r.nombre);
-    readln(r.duracion);
-    readln(r.costo_const);
-    readln(r.costo_mante);
-    readln(r.espectro);
+    readln(s.nombre);
+    readln(s.duracion);
+    readln(s.costoConstr);
+    readln(s.costoMant);
+    readln(s.rango);
 end;
 
-procedure cargarLista(var L: Lista);
+procedure crearLista(var L: lista);
 var
-    r: REG_satelite;
+    s: sonda;
 begin
     repeat
-        leer(r);
-        crearLista(L,r);
-    until r.nombre = 'Gaia';
+        leer(s);
+        cargarLista(L,s);
+    until s.nombre = 'Gaia';
 end;
 
 
-procedure calcularPromedios(L: Lista; var promDuracion, promCosto: real);
+procedure obtenerPromedios(L: lista; var promDuracion, promMontoConst: real);
 var
-    cant: integer;
+    sumaMonto: real;
+    cant,sumaDuracion: integer;
 begin
+    sumaMonto:= 0;
+    sumaDuracion:= 0;
     cant:= 0;
     while (L <> nil) do
         begin
             cant:= cant + 1;
-            promDuracion:= promDuracion + L^.dato.duracion;
-            promCosto:= promCosto + L^.dato.costo_const;
+            sumaDuracion:= sumaDuracion + L^.dato.duracion;
+            sumaMonto:= sumaMonto + L^.dato.costoConstr;
+
+            L:= L^.sig;
         end;
     
-    promDuracion:= promDuracion / cant;
-    promCosto:= promCosto / cant;
+    promDuracion:= sumaDuracion / cant;
+    promMontoConst:= sumaMonto / cant;
 end;
 
-procedure incisos(L:Lista);
+
+procedure incisos(L: lista);
 var
-    x,cantSondas: integer;
-    nomCostosa: String;
-    vc: vector_contador;
-    masCostosa,promDuracion, promCosto: real;
+    maxCostosa,promMontoConst,promDuracion: real;
+    maxNom: String;
+    x,cantSondaDur,cantSondaCosto: integer;
+    vc: vectorRangos;
 begin
-    masCostosa:= 0;
+    maxCostosa:= 0;
     for x:=1 to 7 do
         vc[x]:= 0;
-    promDuracion:= 0;
-    promCosto:= 0;
-    calcularPromedios(L,promDuracion,promCosto);
-
-    cantSondas:= 0;
+    
+    obtenerPromedios(L,promDuracion,promMontoConst);
+    cantSondaDur:= 0;
+    cantSondaCosto:= 0;
 
     while (L <> nil) do
         begin
             // INCISO A
-            if (masCostosa < (L^.dato.costo_const + (L^.dato.costo_mante * L^.dato.duracion))) then
+            if (((L^.dato.costoMant * L^.dato.duracion) + L^.dato.costoConstr) > maxCostosa) then
                 begin
-                    masCostosa:= L^.dato.costo_const;
-                    nomCostosa:= L^.dato.nombre;
+                    maxCostosa:= (L^.dato.costoMant * L^.dato.duracion) + L^.dato.costoConstr;
+                    maxNom:= L^.dato.nombre;
                 end;
-
+            
             // INCISO B
-            vc[L^.dato.espectro]:= vc[L^.dato.espectro] + 1;
+            vc[L^.dato.rango]:= vc[L^.dato.rango] + 1;
 
             // INCISO C
-            if (promDuracion > L^.dato.duracion) then
-                cantSondas:= cantSondas + 1;
-            
+            if (L^.dato.duracion > promDuracion) then
+                cantSondaDur:= cantSondaDur + 1;
+
             // INCISO D
-            if (promCosto > L^.dato.costo_const) then
-                WriteLn(L^.dato.nombre);
-            
+            if (L^.dato.costoConstr > promMontoConst) then
+                cantSondaCosto:= cantSondaCosto + 1;
+
             L:= L^.sig;
         end;
     
-    // inciso A
-    writeln('La sonda mas costosa es: ',nomCostosa);
+    // INCISO A
+    writeln('Sonda mas costosa: ',maxNom);
 
-    // inciso B
+    // INCISO B
     for x:=1 to 7 do
-        WriteLn(vc[x]);
+        writeln(vc[x]);
 
-    // inciso C
-    writeln('La cantidad de sondas que supera la duracion promedio es: ',cantSondas);
+    // INCISO C
+    writeln(cantSondaDur);
 
+    // INCISO D
+    writeln(cantSondaCosto);
 end;
 
 var
     L: Lista;
 begin
     L:= nil;
-    cargarLista(L);
+    crearLista(L);
     incisos(L);
 end.
