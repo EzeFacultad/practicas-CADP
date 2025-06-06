@@ -1,18 +1,18 @@
 program e13;
 
 const
-    dimF = 50;
+    dimF = 2024;
 
 type
-    vectorTemperatura = array[1..12] of real;
-    vectorAnio = array[1..50] of vectorTemperatura;
+    vectorTemperatura = array[1..100] of real;
+    vectorAnio = array[1974..dimF] of vectorTemperatura;
 
 
-procedure cargarTemp(var v: vectorTemperatura);
+procedure cargarTempProm(var v: vectorTemperatura);
 var
     x: integer;
 begin
-    for x:=1 to 12 do
+    for x:=1 to 100 do
         begin
             write('Temperatura: '); readln(v[x]);
         end;
@@ -22,37 +22,37 @@ var
     x: integer;
 begin
     for x:=1 to dimF do
-        cargarTemp(v[x]);
+        cargarTempProm(v[x]);
 end;
 
 procedure recorrerVector(v: vectorAnio);
 var
-    anio,mes,anioMayorProm,anioMayorTemp: integer;
+    anio,punto,anioMayorProm,anioMayorTemp: integer;
     sumaTemp,maxTemp,tempProm: real;
 begin
     maxTemp:= 0;
     tempProm:= 0;
-    for anio:=1 to dimF do
+    for anio:=1974 to dimF do
         begin
             sumaTemp:= 0;
             
-            for mes:=1 to 12 do
+            for punto:=1 to 100 do
                 begin
                     // INCISO A
-                    sumaTemp:= sumaTemp + v[anio][mes];
+                    sumaTemp:= sumaTemp + v[anio][punto];
 
                     // INCISO B
-                    if (maxTemp < v[anio][mes]) then
+                    if (maxTemp < v[anio][punto]) then
                         begin
-                            maxTemp:= v[anio][mes];
+                            maxTemp:= v[anio][punto];
                             anioMayorTemp:= anio;
                         end;
                 end;
             
             // INCISO A
-            if (tempProm < (sumaTemp / 12)) then
+            if (tempProm < (sumaTemp / 100)) then
                 begin
-                    tempProm:= sumaTemp/12;
+                    tempProm:= sumaTemp / 100;
                     anioMayorProm:= anio;
                 end;
         end;
