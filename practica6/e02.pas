@@ -1,4 +1,4 @@
-program ejercicio2;
+program e02;
 
 type
     lista = ^nodo;

@@ -1,4 +1,4 @@
-program e06;
+program e05;
 
 type
     REG_producto = record

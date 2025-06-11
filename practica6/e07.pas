@@ -1,4 +1,4 @@
-program p6eje7;
+program e07;
 
 type
     espec = 1 .. 7;

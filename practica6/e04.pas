@@ -1,4 +1,4 @@
-program JugamosConListas;
+program e04;
 type
     lista = ^nodo;
     nodo = record
