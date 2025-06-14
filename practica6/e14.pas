@@ -30,7 +30,7 @@ begin
     L:= nue;
 end;
 
-procedure leer(r: REG_viaje);
+procedure leer(var r: REG_viaje);
 var
     x: integer;
 begin
