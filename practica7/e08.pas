@@ -124,8 +124,8 @@ begin
 	recorrerVector(vc);
 
 	// INCISO D
-	write('Cantidad de transferencias a terceros realizadas en el mes de Junio en las cuales el número ');
-	writeln('de cuenta destino posea menos dígitos pares que impares: ',transferJunio);
+	write('Cantidad de transferencias a terceros realizadas en el mes de Junio en las cuales el numero ');
+	writeln('de cuenta destino posea menos digitos pares que impares: ',transferJunio);
 end;
 
 var
