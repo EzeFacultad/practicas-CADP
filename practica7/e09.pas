@@ -22,19 +22,15 @@ type
     vectorContador = array[1..8] of real;
 
 
-procedure actualizarYCargar(L: Lista; codPelicula,cantCriticos: integer; puntaje: real; var vc: vectorContador);
+procedure actualizarYCargar(L: Lista; codPelicula: integer; prom: real; var codGenero: integer);
 begin
     while (L <> nil) and (L^.dato.codPelicula <> codPelicula) do
         L:= L^.sig;
 
-    if (L <> nil) then
-        begin
-            // INCISO A
-            L^.dato.promedio:= (puntaje/cantCriticos);
+    L^.dato.promedio:= prom;
 
-            // INCISO B
-            vc[L^.dato.codGenero]:= vc[L^.dato.codGenero] + puntaje;
-        end;
+    // INCISO B
+    codGenero:= L^.dato.codGenero;
 end;
 
 procedure recorrerVector(vc: vectorContador);
@@ -85,7 +81,7 @@ end;
 procedure incisos(L: Lista);
 var
     r: REG_critico;
-    x,codPelicula,cantCriticos: integer;
+    x,codPelicula,cantCriticos,codGenero: integer;
     sumaPuntaje: real;
     vc: vectorContador;
 begin
@@ -112,7 +108,7 @@ begin
                 end;
             
             // INCISO A
-            actualizarYCargar(L,codPelicula,cantCriticos,sumaPuntaje,vc);
+            actualizarYCargar(L,codPelicula,(sumaPuntaje/cantCriticos),codGenero);
         end;
     
     // INCISO B
@@ -155,7 +151,7 @@ var
     L: Lista;
 begin
     L:= nil;
-    cargarLista(L);
+    cargarLista(L); // se dispone
     incisos(L);
     incisoC(L);
 end.
